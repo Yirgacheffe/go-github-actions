@@ -5,6 +5,10 @@ on:
     # Sequence of patterns matched against refs/tags
     tags:
       - 'v*' # push events to match v*, i.e. v2.2.10
+
+permissions:
+  contents: write
+
 jobs:
   release:
     name: Release on Github
@@ -12,15 +16,18 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-      - name: Validate Goreleaser config
-        uses: docker://goreleaser/goreleaser:latest
+      - name: Set up Go
+        uses: actions/setup-go@v2
         with:
-          args: check
-      
+          go-version: '1.17'
+
       - name: Create release on Github
-        uses: docker://goreleaser/goreleaser:latest
+        uses: goreleaser/goreleaser-action:@v2
         with:
+          version: latest
           args: release --rm-dist
           workdir: ./cmd
         env:
