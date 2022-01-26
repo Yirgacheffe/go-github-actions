@@ -1,0 +1,26 @@
+name: Create Release
+
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # push events to match v*, i.e. v2.2.10
+jobs:
+  release:
+    name: Release on Github
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Validate Goreleaser config
+        uses: docker://goreleaser/goreleaser:latest
+        with:
+          args: check
+      
+      - name: Create release on Github
+        uses: docker://goreleaser/goreleaser:latest
+        with:
+          args: release
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
