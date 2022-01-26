@@ -22,6 +22,6 @@ jobs:
         uses: docker://goreleaser/goreleaser:latest
         with:
           args: release --rm-dist
-          workdir: ./cmd/main.go
+          workdir: ./cmd
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
