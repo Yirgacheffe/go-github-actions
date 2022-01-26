@@ -2,7 +2,7 @@ package calc
 
 import "testing"
 
-func TestAdd(t *testing.T) {
+func Test_Add(t *testing.T) {
 	expected := 5
 
 	if actual := Add(3, 2); actual != expected {

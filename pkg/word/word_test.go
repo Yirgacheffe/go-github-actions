@@ -2,7 +2,7 @@ package word
 
 import "testing"
 
-func TestIsPalindrome(t *testing.T) {
+func Test_IsPalindrome(t *testing.T) {
 
 	tests := []struct {
 		input string
