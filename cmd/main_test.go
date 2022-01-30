@@ -29,12 +29,13 @@ func Test_WithNames(t *testing.T) {
 func Test_NoNames(t *testing.T) {
 	is := is.New(t)
 
-	args := []string{"greeter"}
+	args := []string{"greeter", "anabel"}
 	var stdout bytes.Buffer
 
-	err := run(args, &stdout)
-	is.True(err != nil)
+	var err error
+	err = run(args, &stdout)
+	is.NoErr(err)
 
-	// testing flags
-	// err := runWithFlag([]string{"greeter", "-v", "-debug=true", "-another=2"})
+	err = runWithFlags([]string{"greeter", "-v", "-f=json"}, &stdout)
+	is.NoErr(err)
 }

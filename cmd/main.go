@@ -34,8 +34,8 @@ func runWithFlags(args []string, stdout io.Writer) error {
 		return err
 	}
 
-	fmt.Println(stdout, verbose)
-	fmt.Println(stdout, format)
+	fmt.Println(*verbose)
+	fmt.Println(*format)
 
 	return nil
 }
