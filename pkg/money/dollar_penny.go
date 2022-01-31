@@ -19,7 +19,7 @@ func DollarToPennies(amount string) (int64, error) {
 	grps := strings.Split(amount, ".")
 	r := grps[0]
 
-	// a base string for result composing
+	// after "."
 	cents := ""
 
 	if len(grps) == 2 {
@@ -29,6 +29,19 @@ func DollarToPennies(amount string) (int64, error) {
 	if len(cents) > 2 {
 		return 0, errors.New("invalid cents format")
 	}
+
+	/*
+		r := ""
+		if len(grps) == 2 {
+			if len(grps[1]) != 2 {
+				return 0, errors.New("invalid cents")
+			}
+			r = grps[1]
+			if len(r) > 2 {
+				r = r[:2]
+			}
+		}
+	*/
 
 	// pad with 0, this will be 2 0's if there was no .
 	for len(cents) < 2 {
