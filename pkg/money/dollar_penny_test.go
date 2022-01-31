@@ -1,12 +1,10 @@
 package money
 
 import (
-	"fmt"
 	"testing"
 )
 
 func Test_DollarToPenneis(t *testing.T) {
-
 	tests := []struct {
 		name    string
 		amount  string
@@ -31,29 +29,25 @@ func Test_DollarToPenneis(t *testing.T) {
 			}
 		})
 	}
-
 }
 
 func Test_PenniesToDollar(t *testing.T) {
 
-}
-
-func main() {
-
-	inputAmt := "-15.93"
-	fmt.Printf("input amount is %s dollars\n", inputAmt)
-
-	pennies, err := DollarToPennies(inputAmt)
-	if err != nil {
-		panic(err)
+	tests := []struct {
+		name   string
+		amount int64
+		expect string
+	}{
+		{"Normal case", -1593, "-15.93"},
 	}
 
-	fmt.Printf("input amount convert to %d pennies\n", pennies)
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			result := PenniesToDollar(test.amount)
 
-	// add 15 cents into last value
-	pennies += 15
-	dollars := PenniesToDollar(pennies)
-
-	fmt.Printf("add 15 cents, now the value is %s\n", dollars)
-
+			if result != test.expect {
+				t.Errorf("PenniesToDollar() result=%v, expect=%v", result, test.expect)
+			}
+		})
+	}
 }
