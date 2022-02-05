@@ -2,6 +2,8 @@ package money
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_DollarToPenneis(t *testing.T) {
@@ -44,10 +46,7 @@ func Test_PenniesToDollar(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			result := PenniesToDollar(test.amount)
-
-			if result != test.expect {
-				t.Errorf("PenniesToDollar() result=%v, expect=%v", result, test.expect)
-			}
+			assert.Equal(t, result, test.expect)
 		})
 	}
 }

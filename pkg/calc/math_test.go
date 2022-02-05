@@ -1,6 +1,8 @@
 package calc
 
-import "testing"
+import (
+	"testing"
+)
 
 func Test_Add(t *testing.T) {
 	expected := 5
