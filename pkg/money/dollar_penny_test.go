@@ -34,6 +34,7 @@ func Test_DollarToPenneis(t *testing.T) {
 }
 
 func Test_PenniesToDollar(t *testing.T) {
+	t.Parallel()
 
 	tests := []struct {
 		name   string
@@ -44,7 +45,9 @@ func Test_PenniesToDollar(t *testing.T) {
 	}
 
 	for _, test := range tests {
+		test := test // Avoid race condition
 		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
 			result := PenniesToDollar(test.amount)
 			assert.Equal(t, result, test.expect)
 		})

@@ -12,7 +12,9 @@ func Test_Greet_Name(t *testing.T) {
 	}
 }
 
-// gotests generation codes
+/*
+ * Note: gotests GENERATION CODES
+ */
 func TestGreet(t *testing.T) {
 	type args struct {
 		name string
