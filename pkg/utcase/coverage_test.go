@@ -13,7 +13,8 @@ func TestCoverage(t *testing.T) {
 		args    args
 		wantErr bool
 	}{
-		{"no condition", args{true}, true},
+		{"no condition", args{false}, false},
+		{"has condition", args{true}, true},
 	}
 
 	for _, tt := range tests {
