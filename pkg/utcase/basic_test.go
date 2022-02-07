@@ -30,7 +30,7 @@ func TestHello_With_Empty_Arg(t *testing.T) {
 	emptyExp := "Hello dude!"
 	emptyAct := hello("")
 
-	if emptyAct == emptyAct {
+	if emptyAct == emptyExp {
 		t.Logf("Succeed!  Exp: %#v, Got %#v", emptyExp, emptyAct)
 	} else {
 		t.Errorf("Failed! Exp: %#v, Got %#v", emptyExp, emptyAct)

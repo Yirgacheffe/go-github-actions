@@ -11,19 +11,23 @@ import (
 )
 
 func GuessHandler(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
+	err := r.ParseForm()
+	if err != nil {
+		log.Fatalf("parse form error: %v", err)
+	}
 
 	msg := r.FormValue("message")
 	real := []byte("$2a$10$2ovnPWuIjMx2S0HvCxP/mutzdsGhyt8rq/JqnJg/6OyC3B0APMGlK")
 
 	if err := bcrypt.CompareHashAndPassword(real, []byte(msg)); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("Nope!"))
+
+		_, _ = w.Write([]byte("Nope!"))
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Right!"))
+	_, _ = w.Write([]byte("Right!"))
 }
 
 func HandleReq(w http.ResponseWriter, r *http.Request) {
@@ -32,25 +36,22 @@ func HandleReq(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 		display(w, r)
-		break
 	case http.MethodPost:
 		add(w, r)
-		break
 	default:
 		w.WriteHeader(405)
-		w.Write([]byte("Method not allowed"))
-		break
+		_, _ = w.Write([]byte("Method not allowed"))
 	}
 }
 
 func display(w http.ResponseWriter, r *http.Request) {
 	log.Println("Response returned: ", 200)
-	w.Write([]byte("200"))
+	_, _ = w.Write([]byte("200"))
 }
 
 func add(w http.ResponseWriter, r *http.Request) {
 	log.Println("Response returned: ", 201)
-	w.Write([]byte("201"))
+	_, _ = w.Write([]byte("201"))
 }
 
 /*
