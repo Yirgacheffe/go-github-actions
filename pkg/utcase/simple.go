@@ -1,4 +1,4 @@
-package calc
+package utcase
 
 // Add return sum of two numbers
 func Add(a, b int) int {
