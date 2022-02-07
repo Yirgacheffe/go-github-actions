@@ -24,7 +24,6 @@ func GuessHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Right!"))
-	return
 }
 
 func HandleReq(w http.ResponseWriter, r *http.Request) {
@@ -46,10 +45,12 @@ func HandleReq(w http.ResponseWriter, r *http.Request) {
 
 func display(w http.ResponseWriter, r *http.Request) {
 	log.Println("Response returned: ", 200)
+	w.Write([]byte("200"))
 }
 
 func add(w http.ResponseWriter, r *http.Request) {
 	log.Println("Response returned: ", 201)
+	w.Write([]byte("201"))
 }
 
 /*
@@ -64,6 +65,7 @@ func init() {
 
 func main() {
 	http.HandleFunc("/guess", GuessHandler)
+	http.HandleFunc("/puzzle", HandleReq)
 
 	fmt.Println("server started at localhost:8080")
 	log.Panic(http.ListenAndServe("localhost:8080", nil))
