@@ -58,5 +58,4 @@ func TestSendJSON(t *testing.T) {
 			t.Error("\tShould have a Email.", ballotX, u.Name)
 		}
 	}
-
 }
