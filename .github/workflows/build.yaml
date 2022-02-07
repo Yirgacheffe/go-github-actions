@@ -60,4 +60,4 @@ jobs:
           echo "GOARCH=$GOARCH"           >> $GITHUB_ENV
       - name: Build
         run: |
-          go build -o "$BINARY_NAME" -v ./cmd/main.go
+          go build -o "$BINARY_NAME" -v ./cmd/general/main.go
