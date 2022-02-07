@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 const (
@@ -57,5 +59,43 @@ func TestSendJSON(t *testing.T) {
 		} else {
 			t.Error("\tShould have a Email.", ballotX, u.Name)
 		}
+	}
+}
+
+func TestSendJSONBasic(t *testing.T) {
+
+	type user struct {
+		Name  string
+		Email string
+	}
+
+	tests := []struct {
+		name   string
+		param  string
+		expect user
+	}{
+		{"base case", "noparam", user{"zeng tai", "zeng.tai@ardanstudios.com"}},
+		{"bad  case", "noparam", user{"zeng tai", "zeng.tai@ardanstudios.com"}},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req, err := http.NewRequest("GET", "/sendjson", nil) // strings.NewReader(tt.param) if you have parameters
+			if err != nil {
+				t.Fatalf("failed to make request %v", err)
+			}
+
+			w := httptest.NewRecorder()
+			http.DefaultServeMux.ServeHTTP(w, req)
+
+			assert.Equal(t, http.StatusOK, w.Code)
+
+			u := &user{}
+			err = json.NewDecoder(w.Body).Decode(&u)
+
+			assert.Nil(t, err)
+			assert.Equal(t, tt.expect.Name, u.Name)
+			assert.Equal(t, tt.expect.Email, u.Email)
+		})
 	}
 }
