@@ -91,11 +91,45 @@ func TestSendJSONBasic(t *testing.T) {
 			assert.Equal(t, http.StatusOK, w.Code)
 
 			u := &user{}
-			err = json.NewDecoder(w.Body).Decode(&u)
+			err = json.NewDecoder(w.Body).Decode(&u) // err := json.Unmarshal([]byte(w.Body.String()), &resp)
 
 			assert.Nil(t, err)
 			assert.Equal(t, tt.expect.Name, u.Name)
 			assert.Equal(t, tt.expect.Email, u.Email)
 		})
 	}
+}
+
+func TestDeleteEntry(t *testing.T) {
+	req, err := http.NewRequest("DELETE", "entries", nil)
+	if err != nil {
+		t.Fatalf("failed to make request %v", err)
+	}
+
+	q := req.URL.Query()
+	q.Add("id", "4")
+	req.URL.RawQuery = q.Encode()
+
+	w := httptest.NewRecorder()
+	handler := http.HandlerFunc(EntryHandler)
+	handler.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusNoContent, w.Code)
+}
+
+func TestDeleteEntry_405(t *testing.T) {
+	req, err := http.NewRequest("POST", "entries", nil)
+	if err != nil {
+		t.Fatalf("failed to make request %v", err)
+	}
+
+	q := req.URL.Query()
+	q.Add("id", "4")
+	req.URL.RawQuery = q.Encode()
+
+	w := httptest.NewRecorder()
+	handler := http.HandlerFunc(EntryHandler)
+	handler.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusMethodNotAllowed, w.Code)
 }
