@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-
-	"github.com/Yirgacheffe/go-github-actions/pkg/hello"
 )
 
 const (
@@ -41,7 +39,6 @@ func runWithFlags(args []string, stdout io.Writer) error {
 }
 
 func main() {
-	fmt.Println(hello.Greet("Annie"))
 
 	err := run(os.Args, os.Stdout)
 	if err != nil {
